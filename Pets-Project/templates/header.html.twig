@@ -1,0 +1,136 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- ICONO DEL NAV -->
+    {% if not is_granted("IS_AUTHENTICATED_FULLY")%}
+      <a href="{{path('home')}}" class="navbar-brand">
+        <img src="{{asset('img/logo.jpeg')}}" style="margin-left:25px"  width="90" height="60">
+      </a>
+    {% endif %}
+    {% if is_granted("IS_AUTHENTICATED_FULLY")%}
+      <a href="{{path('fos_user_profile_show')}}" class="navbar-brand">
+        <img src="{{asset('img/logo.jpeg')}}" style="margin-left:25px" width="90" height="60">
+      </a>
+    {% endif %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <!-- BUSQUEDA -->
+    {% if not is_granted("IS_AUTHENTICATED_FULLY")%}
+       
+    {% endif %}
+
+    <ul class="navbar-nav mr-auto justify-content-end">
+     
+          <!-- PARA USUARIOS QUE NO TIENEN UN ROL -->
+          {% if not is_granted("IS_AUTHENTICATED_FULLY")%}
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="{{path('ayuda')}}"><img src="{{asset('img/cogs.png')}}">Contactos</a> 
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{{path('nosotros')}}"><img src="{{asset('img/user-tie.png')}}">Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{{path('home')}}"><img src="{{asset('img/home.png')}}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{{path('fos_user_registration_register')}}"><img src="{{asset('img/floppy-disk.png')}}">Registro</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{{path('fos_user_security_login')}}"><img src="{{asset('img/spinner9.png')}}">Login</a>
+            </li>
+          {% endif %}      
+
+          {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+            {% if is_granted("ROLE_ANFITRION") %}
+              <li class="nav-item text-white">              
+                <a href="{{ path('fos_user_profile_show')}}">
+                <img src="{{ vich_uploader_asset(app.user, 'imageFile') }}" alt="{{ app.user.username }}" class="rounded-circle border border-secondary" width="40" height="40">
+                <span class="nav-item text-white">Hola {{ app.user.username }}</span>
+                </a>
+              </li>
+             
+              <li class="nav-item  dropdown">
+                <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
+                Paquetes 
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{ path('paquete_new')}}">Registrar Paquetes</a>
+                  <a class="dropdown-item" href="{{ path('paquete_index') }}">Mis Paquetes</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">              
+                <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
+                Mascota 
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{ path('mascota_new') }}">Registrar Mascotas</a>
+                  <a class="dropdown-item" href="{{ path('mascota_index') }}">Mis mascotas</a>
+                </div>
+              </li>                                  
+            {% elseif is_granted("ROLE_USER") %}
+              <li>
+                <a href="{{ path('fos_user_profile_show')}}">
+                <img src="{{ vich_uploader_asset(app.user, 'imageFile') }}" alt="{{ app.user.username }}" class="rounded-circle border border-secondary" width="40" height="40">
+                </a>
+              </li>
+              <li class="nav-item">              
+                <a class="nav-link text-white" href="{{ path('fos_user_profile_show')}}">Hola {{ app.user.username }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="{{ path('host')}}"> Se Anfitrion</a> 
+              </li>
+              <li class="nav-item dropdown">              
+                <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
+                Mascota 
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{ path('mascota_new') }}">Registrar Mascota</a>
+                  <a class="dropdown-item" href="{{ path('mascota_index') }}">Mis mascotas</a>
+                </div>
+              </li>              
+              
+            {% endif %}
+
+            <li class="nav-item dropdown">
+                <a class="nav-link text-muted dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Tus Movimientos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{ path('servicio_index') }}">Servicio Contratado</a>
+                  <a class="dropdown-item" href="{{ path('host')}}">Actualizar Cuenta</a>
+                  <a class="dropdown-item" href="{{ path('buy')}}">Contrata Paquete</a>
+                  {% if is_granted("ROLE_ANFITRION") %}
+                    <a class="dropdown-item" href="{{ path('cobro_anf_index') }}">Cobros</a>
+                  {% endif %}
+                </div>
+              </li>
+            {% if is_granted("ROLE_SUPER_ADMIN") %}
+
+              <li class="nav-item dropdown">
+                <a class="nav-link text-muted dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Transacciones
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{ path('transaccion_index') }}">Realiadas</a>
+                </div>
+              </li>
+            {% endif %}
+            
+            <span> <a class="nav-item nav-link text-muted" href="{{ path('fos_user_security_logout') }}"> SALIR </a></span>
+          
+          {% endif %}
+    </ul>
+
+
+<div class="social ">
+    <ul>
+
+      <li><a href="http://www.facebook.com" class="icon-facebook"><img src="{{asset('img/facebook.png')}}" > </a> 
+      <a href="http://www.twitter.com" class="icon-facebook"><img src="{{asset('img/twitter.png')}}" > 
+      </a> <a href="http://www.youtube.com" class="icon-facebook2"><img src="{{asset('img/youtube.png')}}" > </a>
+      </li>
+    </ul>
+
+  </div>
+</nav>

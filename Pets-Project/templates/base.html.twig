@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}PETS{% endblock %}</title>
+        <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap"> 
+        <style>
+            body{
+                background-color: #0EBF51;
+                font-family: 'Roboto', sans-serif;
+            }
+        
+        </style>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {{ include('header.html.twig')}} 
+        
+        {% block body %}
+        
+        {% endblock %}
+
+        {% block footer %}
+            {{ include('footer.html.twig')}}
+        {% endblock %}
+
+        <script src="https://js.stripe.com/v3/"></script>   
+        <script src="{{asset('js/jquery-3.4.1.slim.min.js')}}"></script>  
+        <script src="{{asset('js/bootstrap.min.js')}}"></script>  
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
+

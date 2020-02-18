@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cuenta{% endblock %}
+
+{% block body %}
+{{parent()}}
+
+    {{ include('host/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}
+
+

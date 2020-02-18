@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Servicio index{% endblock %}
+
+{% block body %}
+ {{ parent()}}
+ <div class="container">
+    {% if is_granted("ROLE_ANFITRION") %}
+        <h1 class="display-3 text-center">Tus servicios contratados</h1>
+    {% elseif is_granted("ROLE_USER") %}
+        <h1 class="display-3 text-center">Tus servicios contratados</h1>
+    {% endif %}
+
+    {% if is_granted("ROLE_SUPER_ADMIN") %}
+        <h1>Servicio Contratados</h1>
+    {% endif %}
+    <img src="{{ asset('img/servicios.gif')}}" class="d-block w-100" width="10" height="200"> 
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Hora_Inicio</th>
+                <th>Hora_Fin</th>
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                    <th>actions</th>
+                {% endif %}
+
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for servicio in servicios %}
+            <tr>
+                <td>{{ servicio.id }}</td>
+                <td>{{ servicio.HoraInicio ? servicio.HoraInicio|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ servicio.HoraFin ? servicio.HoraFin|date('Y-m-d H:i:s') : '' }}</td>
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                <td>
+                    <a href="{{ path('servicio_show', {'id': servicio.id}) }}">Mirar</a>
+                    <a href="{{ path('servicio_edit', {'id': servicio.id}) }}">Editar</a>
+                </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
