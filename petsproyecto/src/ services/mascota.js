@@ -1,10 +1,20 @@
-const getTasks = async () => {
-    const data = await fetch('http://www.mocky.io/v2/5e3462f13000008245d9647a');
+//Get
+const getMascotas = async () => {
+
+    const response = await fetch('http://localhost:8000/api/hoja_vidas', {
+        method:'GET',
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer'
+        }
+    });
+
+    const data = await fetch('http://localhost/api/mascotas');
     return await data.json();
 };
 
-const Tasks = {
-    getTasks
+const Mascotas = {
+    getMascotas
 };
 
-export default Tasks;
+export default Mascotas;

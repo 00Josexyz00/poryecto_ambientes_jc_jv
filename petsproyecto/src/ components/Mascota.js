@@ -1,4 +1,5 @@
 import React,{Component} from "react";
+import Pet from "../ services/mascota";
 
 export default class Mascota extends Component{
     state = {
@@ -7,7 +8,7 @@ export default class Mascota extends Component{
     };
 
     componentDidMount() {
-        console.log('this.props.task', this.props.task);
+        console.log('this.props.Mascota', this.props.Pet);
         if(this.props.task) {
             this.setState({
                 title: this.props.task.title,
@@ -15,6 +16,8 @@ export default class Mascota extends Component{
             })
         }
     }
+
+
     render() {
         return <div>
 
